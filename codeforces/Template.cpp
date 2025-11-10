@@ -56,6 +56,10 @@ template<typename T1, typename T2>ostream& operator <<(ostream& out, const pair<
 int main() {
 	fastio();
 
+	#ifndef ONLINE_JUDGE
+	freopen("input.txt", "r", stdin);
+	freopen("output.txt", "w", stdout);
+	#endif
 
 
   
