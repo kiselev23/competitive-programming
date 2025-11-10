@@ -21,7 +21,7 @@ Node tree[MAX_NODES + 1];
 int root = 0;
 int next_index = 1;
 
-// Инициализация генератора случайных чисел
+// inizialize generator mt19937
 random_device rd;
 mt19937 rng(rd());
 uniform_int_distribution<int> dist(0, INT_MAX);
@@ -31,7 +31,7 @@ void init() {
     next_index = 1;
 }
 
-// Создание нового узла
+// create new node
 int new_node(int key, int value = 0, int priority = -1) {
     if (next_index > MAX_NODES) {
         cerr << "ERROR: Too many nodes!" << endl;
@@ -46,7 +46,7 @@ int new_node(int key, int value = 0, int priority = -1) {
     return idx;
 }
 
-// Разделение дерева по ключу
+// split tree by key
 void split(int v, int key, int& l, int& r) {
     if (!v) {
         l = r = 0;
@@ -62,7 +62,7 @@ void split(int v, int key, int& l, int& r) {
     }
 }
 
-// Слияние двух деревьев
+// merge subtrees
 int merge(int l, int r) {
     if (!l) return r;
     if (!r) return l;
@@ -76,7 +76,7 @@ int merge(int l, int r) {
     }
 }
 
-// Вставка элемента с ключом
+// add element with key
 void insert(int key, int value = 0) {
     int l, r;
     split(root, key, l, r);
@@ -84,7 +84,7 @@ void insert(int key, int value = 0) {
     root = merge(merge(l, new_node_idx), r);
 }
 
-// Удаление элемента по ключу
+// delete element by key
 void erase(int key) {
     int l, m, r;
     split(root, key, l, r);
@@ -92,7 +92,7 @@ void erase(int key) {
     root = merge(l, r);
 }
 
-// Поиск элемента по ключу
+// find element by key
 bool contains(int key) {
     int l, m, r;
     split(root, key, l, r);
@@ -102,7 +102,7 @@ bool contains(int key) {
     return found;
 }
 
-// Получение значения по ключу
+// get element by key
 int get(int key) {
     int l, m, r;
     split(root, key, l, r);
@@ -117,7 +117,7 @@ int get(int key) {
     return result;
 }
 
-// Изменение значения по ключу
+// change element by key
 void set(int key, int value) {
     int l, m, r;
     split(root, key, l, r);
@@ -138,7 +138,7 @@ void in_order(int v) {
     in_order(tree[v].right);
 }
 
-// Поиск минимального ключа
+// find min key
 int find_min(int v) {
     while (tree[v].left) {
         v = tree[v].left;
@@ -146,7 +146,7 @@ int find_min(int v) {
     return tree[v].key;
 }
 
-// Поиск максимального ключа
+// find max key
 int find_max(int v) {
     while (tree[v].right) {
         v = tree[v].right;
@@ -154,11 +154,11 @@ int find_max(int v) {
     return tree[v].key;
 }
 
-// Пример использования
+// Example
 int main() {
     init();
     
-    // Вставляем элементы с ключами
+    // add element with key
     insert(10, 100);
     insert(5, 50);
     insert(15, 150);
@@ -169,20 +169,20 @@ int main() {
     in_order(root);
     cout << endl;
     
-    // Поиск элементов
+    // search element
     cout << "Contains key 7: " << (contains(7) ? "Yes" : "No") << endl;
     cout << "Value at key 7: " << get(7) << endl;
     
-    // Изменение значения
+    // change element
     set(7, 700);
     cout << "After changing key 7 to 700: ";
     in_order(root);
     cout << endl;
-    // Поиск мин и макс
+    // search Min and Max
     cout << "Min key: " << find_min(root) << endl;
     cout << "Max key: " << find_max(root) << endl;
     
-    // Удаление элемента
+    // delete element
     erase(7);
     cout << "After erasing key 7: ";
     in_order(root);
